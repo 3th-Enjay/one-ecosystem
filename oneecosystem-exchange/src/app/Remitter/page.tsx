@@ -27,18 +27,26 @@ export default function RemitterPage() {
   };
 
   return (
-    <div className="form-container">
-      <h1>Enter Remitter Code</h1>
-      <form onSubmit={handleSubmit}>
-        <FormInput
-          type="text"
-          label="Remitter Code"
-          value={remitterCode}
-          onChange={(e) => setRemitterCodeLocal(e.target.value)}  // Update local state
-          placeholder="Enter Remitter Code"
-        />
-        <button type="submit">Submit</button>
-      </form>
+    <div className="min-h-screen bg-black text-gold flex items-center justify-center">
+      <div className="w-full max-w-md p-6 rounded-lg shadow-xl">
+        <h1 className="text-2xl font-bold text-center  mb-6">Enter Remitter Code</h1>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <FormInput
+            type="text"
+            label="Remitter Code"
+            value={remitterCode}
+            onChange={(e) => setRemitterCodeLocal(e.target.value)}  // Update local state
+            placeholder="Enter Remitter Code"
+            className="w-full p-2 border border-gray-300 rounded text-black"
+          />
+          <button
+            type="submit"
+            className="w-full text-white border-gold py-2 rounded-full hover:bg-gold transition-colors hover:text-black"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
