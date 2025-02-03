@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import CrystalBackground from "@/components/CrystalBackground";
 import Navbar from "@/components/Navbar";
 import { sendEmail, FormData } from "@/app/lib/email";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const initialFormData: FormData = {
   surname: "",
@@ -32,6 +33,8 @@ export default function FormPage() {
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [error, setError] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
 
   // Load form data from localStorage on mount.
   useEffect(() => {
@@ -50,8 +53,17 @@ export default function FormPage() {
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
+  
+    // Check for UPC Code validity during the input change
+    if (name === 'upcCode' && value !== "1234567890") {
+      setError("Invalid UPC Code");
+    } else {
+      setError("");  // Clear error if valid
+    }
+  
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+  
 
   // Handle final submission
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -285,29 +297,43 @@ export default function FormPage() {
               />
             </div>
             <div className="mt-4 grid grid-cols-2 gap-4">
-              <div>
+              <div className="relative">
                 <label className="block text-sm font-medium text-gold">
                   Password
                 </label>
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  className="w-full p-2 border border-gray-300 rounded"
+                  className="w-full p-2 border border-gray-300 rounded pr-10"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute top-9 right-3 text-gray-500"
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
               </div>
-              <div>
+              <div className="relative">
                 <label className="block text-sm font-medium text-gold">
                   Confirm Password
                 </label>
                 <input
-                  type="password"
+                  type={showConfirmPassword ? "text" : "password"}
                   name="confirmPassword"
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  className="w-full p-2 border border-gray-300 rounded"
+                  className="w-full p-2 border border-gray-300 rounded pr-10"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute top-9 right-3 text-gray-500"
+                >
+                  {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
               </div>
             </div>
             <div className="mt-4">
