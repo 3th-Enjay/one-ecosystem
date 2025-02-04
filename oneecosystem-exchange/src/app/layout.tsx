@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Head from "next/head";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ProtectionProvider } from "@/context/ProtectionContext";
@@ -25,18 +26,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
+      <Head>
+        {/* Preconnect for fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Montserrat:wght@700&display=swap"
           rel="stylesheet"
         />
-      </head>
+        {/* Add your custom icon */}
+        <link rel="icon" type="image/png" sizes="32x32" href="/logo.png" />
+      </Head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-      <ProtectionProvider>
-        {children}
-    </ProtectionProvider>
+        <ProtectionProvider>
+          {children}
+        </ProtectionProvider>
       </body>
     </html>
   );

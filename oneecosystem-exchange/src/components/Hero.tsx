@@ -37,7 +37,7 @@ export default function Hero() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, delay: 0.5 }}
                 >
-                    It's our greatest priority to serve you better ✨.
+                    It&apos;s our greatest priority to serve you better ✨.
                 </motion.p>
 
                 {/* Description text */}
