@@ -6,7 +6,7 @@ import { useProtection } from "../../context/ProtectionContext";
 import FormInput from "../../components/FormInput";
 
 export default function RemitterPage() {
-  const { setRemitterCode, isValidUPCCode, isValidRemitterCode } = useProtection();
+  const { setRemitterCode, isValidUPCCode } = useProtection();
   const [remitterCode, setRemitterCodeLocal] = useState("");  // Local state for the form
   const router = useRouter();
 
