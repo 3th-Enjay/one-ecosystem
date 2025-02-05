@@ -23,8 +23,7 @@ export default function PassphrasePage() {
   const [error, setError] = useState("");
   const router = useRouter();
 
-  // The remitter code to validate against
-  const correctRemitterCode = "123456";  // You can store this securely in environment variables or a database
+  
 
   // Handle passphrase generation
   const handleGeneratePassphrase = () => {

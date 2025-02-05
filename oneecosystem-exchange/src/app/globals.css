@@ -19,28 +19,9 @@
 body {
   font-family: var(--font-body);
 }
+
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
-}
-/* Crystal Background Styles */
-.crystal-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  pointer-events: none; /* To prevent interaction with the elements */
-}
-
-.crystal {
-  position: absolute;
-  background-image: url('/logo.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  width: 40px;
-  height: 40px;
-  animation: float 6s infinite ease-in-out;
 }
 
 /* Crystal Background Styles */
@@ -54,9 +35,18 @@ h1, h2, h3, h4, h5, h6 {
   pointer-events: none; /* So the form remains interactive */
 }
 
-/* Individual Crystal Styling */
+.crystal {
+  position: absolute;
+  background-image: url('/logo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 40px;
+  height: 40px;
+  /* Use the defined bounceEffect animation instead of an undefined "float" animation */
+  animation: bounceEffect 6s infinite ease-in-out;
+}
 
-/* Different positions for crystals */
+/* Individual Crystal Styling */
 .crystal1 { top: 10%; left: 15%; animation-delay: 0s; }
 .crystal2 { top: 30%; left: 50%; animation-delay: 1s; }
 .crystal3 { top: 70%; left: 80%; animation-delay: 2s; }
@@ -76,4 +66,3 @@ h1, h2, h3, h4, h5, h6 {
 .bounce {
   animation: bounceEffect 1.5s infinite ease-in-out;
 }
-

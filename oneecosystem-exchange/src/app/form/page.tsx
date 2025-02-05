@@ -8,7 +8,6 @@ import Navbar from "@/components/Navbar";
 import { sendEmail, FormData } from "@/app/lib/email";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useProtection } from "@/context/ProtectionContext"; // Import the context
-import Footer from "@/components/Footer";
 
 const initialFormData: FormData = {
   surname: "",
