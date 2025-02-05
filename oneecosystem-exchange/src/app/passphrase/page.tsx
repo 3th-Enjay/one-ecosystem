@@ -18,7 +18,6 @@ const generatePassphrase = () => {
 export default function PassphrasePage() {
   const [surname, setSurname] = useState("");
   const [firstName, setFirstName] = useState("");
-  const [remitterCode, setRemitterCode] = useState("");
   const [generatedPassphrase, setGeneratedPassphrase] = useState("");
   const [confirmPassphrase, setConfirmPassphrase] = useState("");
   const [error, setError] = useState("");
@@ -31,11 +30,6 @@ export default function PassphrasePage() {
   const handleGeneratePassphrase = () => {
     if (!surname || !firstName) {
       setError("Please enter your surname and first name before generating a passphrase.");
-      return;
-    }
-
-    if (remitterCode !== correctRemitterCode) {
-      setError("Incorrect remitter code. Access to passphrase is denied.");
       return;
     }
 
@@ -118,18 +112,6 @@ export default function PassphrasePage() {
           />
         </div>
 
-        {/* Remitter Code Input */}
-        <div>
-          <label className="block text-sm font-medium mb-1">Remitter Code</label>
-          <input
-            type="text"
-            value={remitterCode}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => setRemitterCode(e.target.value)}
-            placeholder="Enter remitter code"
-            className="w-full p-2 border border-gray-300 rounded text-black"
-            required
-          />
-        </div>
 
         {/* Generate Passphrase Button */}
         <button
@@ -172,6 +154,7 @@ export default function PassphrasePage() {
           Create Passphrase
         </button>
       </form>
+      
     </div>
   );
 }

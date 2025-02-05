@@ -34,9 +34,6 @@ export default function SuccessPage() {
           Go to Telegram
         </button>
       </div>
-      <footer className="mt-8 text-center text-gray-500">
-        <p>&copy; {new Date().getFullYear()} Your Company. All rights reserved.</p>
-      </footer>
     </div>
   );
 }

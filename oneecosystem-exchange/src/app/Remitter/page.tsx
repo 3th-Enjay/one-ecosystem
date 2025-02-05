@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useProtection } from "../../context/ProtectionContext";
 import FormInput from "../../components/FormInput";
+import { motion } from "framer-motion";
+import Link from "next/link";
 
 export default function RemitterPage() {
   const { setRemitterCode, isValidUPCCode } = useProtection();
@@ -41,6 +43,30 @@ export default function RemitterPage() {
   };
 
   return (
+    <div>
+        <nav>
+        <motion.nav
+      className="w-full bg-black text-gold p-4 shadow-md fixed top-0 z-50"
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.8 }}
+    >
+      <div className="max-w-6xl mx-auto flex justify-between items-center">
+        <h1 className="text-2xl font-bold">OneEcoSystem</h1>
+
+        {/* Wrap the button with Link */}
+        <Link href="https://t.me/Oeslegalofficer" passHref>
+          <motion.button
+            className="border border-gold text-gold bg-black px-4 py-2 hover:bg-gold hover:text-black transition-colors duration-300 rounded-full"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Get Remitter Code
+          </motion.button>
+        </Link>
+      </div>
+    </motion.nav>
+        </nav>
     <div className="min-h-screen bg-black text-gold flex items-center justify-center">
       <div className="w-full max-w-md p-6 rounded-lg shadow-xl">
         <h1 className="text-2xl font-bold text-center mb-6">Enter Remitter Code</h1>
@@ -61,6 +87,7 @@ export default function RemitterPage() {
           </button>
         </form>
       </div>
+    </div>
     </div>
   );
 }
